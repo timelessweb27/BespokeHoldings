@@ -81,16 +81,43 @@
                 }
             });
 
-            function handleSubmit(event) {
-                // Show success message
-                document.getElementById("contactForm").style.display = "none";
-                document.getElementById("successMessage").style.display = "block";
-                
-                // Close form after 3 seconds
-                setTimeout(() => {
-                    closeForm();
-                }, 3000);
-            }
+        function handleSubmit(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+            
+            // Get the form data
+            const formData = new FormData(event.target);
+            
+            // Submit to Formspark
+            fetch("https://submit-form.com/lYiD9QwzZ", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById("contactForm").style.display = "none";
+                    document.getElementById("successMessage").style.display = "block";
+                    
+                    // Reset form
+                    event.target.reset();
+                    
+                    // Close form after 3 seconds
+                    setTimeout(() => {
+                        closeForm();
+                    }, 3000);
+                } else {
+                    throw new Error("Form submission failed");
+                }
+            })
+            .catch(error => {
+                alert("Oops! There was a problem submitting your form. Please try again.");
+            });
+        }
         </script>
     </body>
 </html>
