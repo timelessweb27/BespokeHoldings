@@ -17,12 +17,117 @@
             />
             <h1>WEBSITE LAUNCHING SOON</h1>
             <p>Contact us today!</p>
-            <a
-                href="mailto:hello@bespokeholdings.com.au"
-                aria-label="Contact us via email"
-            >
-                CONTACT US
-            </a>
+            <button onclick="openForm()" class="contact-btn">CONTACT US</button>
         </div>
+
+        <!-- Popup Form -->
+        <div class="overlay" id="formOverlay">
+            <div class="popup-form">
+                <button class="close-button" onclick="closeForm()">
+                    &times;
+                </button>
+                <h2>Contact Us</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        SEND MESSAGE
+                    </button>
+                </form>
+                <div
+                    id="successMessage"
+                    class="success-message"
+                    style="display: none"
+                >
+                    Message sent successfully!
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openForm() {
+                document.getElementById("formOverlay").style.display = "block";
+                document.getElementById("successMessage").style.display =
+                    "none";
+                document.getElementById("contactForm").style.display = "block";
+            }
+
+            function closeForm() {
+                document.getElementById("formOverlay").style.display = "none";
+                // Reset form when closing
+                document.getElementById("contactForm").reset();
+            }
+
+            // Close popup when clicking outside
+            document
+                .getElementById("formOverlay")
+                .addEventListener("click", function (event) {
+                    if (event.target === this) {
+                        closeForm();
+                    }
+                });
+
+            // Handle form submission
+            document
+                .getElementById("contactForm")
+                .addEventListener("submit", async function (event) {
+                    event.preventDefault();
+
+                    try {
+                        const response = await fetch(
+                            "https://formspree.io/f/mbllnddy",
+                            {
+                                method: "POST",
+                                body: new FormData(event.target),
+                                headers: {
+                                    Accept: "application/json",
+                                },
+                            }
+                        );
+
+                        if (response.ok) {
+                            // Show success message
+                            document.getElementById(
+                                "contactForm"
+                            ).style.display = "none";
+                            document.getElementById(
+                                "successMessage"
+                            ).style.display = "block";
+
+                            // Reset form
+                            event.target.reset();
+
+                            // Close form after 3 seconds
+                            setTimeout(() => {
+                                closeForm();
+                            }, 3000);
+                        } else {
+                            throw new Error("Form submission failed");
+                        }
+                    } catch (error) {
+                        alert(
+                            "Oops! There was a problem submitting your form. Please try again."
+                        );
+                    }
+                });
+        </script>
     </body>
 </html>
