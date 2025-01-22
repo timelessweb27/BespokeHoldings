@@ -63,6 +63,12 @@ body {
 }
 
 /* Popup Form Styles */
+form {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .overlay {
     display: none;
     position: fixed;
@@ -99,6 +105,8 @@ body {
 
 .form-group {
     margin-bottom: 20px;
+
+    width: 100%;
 }
 
 .form-group label {
@@ -118,6 +126,7 @@ body {
     font-size: 16px;
     transition: border-color 0.3s ease-in-out;
     resize: vertical;
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -228,10 +237,12 @@ body {
     .form-group input,
     .form-group textarea {
         font-size: 14px;
+        padding: 10px;
     }
 
     .submit-btn {
         font-size: 16px;
+        padding: 8px 16px;
     }
 
     .success-message {
@@ -242,5 +253,29 @@ body {
 @media (max-width: 320px) {
     .container h1 {
         font-size: 40px;
+    }
+
+    .popup-form {
+        padding: 15px;
+    }
+
+    .popup-form h2 {
+        font-size: 20px;
+    }
+
+    .form-group label,
+    .form-group input,
+    .form-group textarea {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .success-message {
+        font-size: 14px;
     }
 }
